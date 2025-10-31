@@ -21,9 +21,9 @@ def generate_bill_pdf():
     y = height - 25 * mm
 
     restaurant = {
-        "name": "The Spicy Spoon",
-        "address": "123 Curry Lane, Foodie City, 400001",
-        "phone": "+91 98765 43210",
+        "name": "Hitchki",
+        "address": "Fifc Tower, Plot No. C- 54 & 55, Bandra Kurla Complex Rd, G Block BKC, Bandra Kurla Complex, Bandra East, Mumbai, Maharashtra 400098",
+        "phone": "+91 086559 11384",
         "gstin": "27ABCDE1234F1Z5",
     }
 
@@ -139,4 +139,5 @@ st.download_button(
     file_name="restaurant_bill.pdf",
     mime="application/pdf"
 )
+
 
