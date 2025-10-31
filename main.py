@@ -3,7 +3,7 @@ from reportlab.lib.units import mm
 from reportlab.pdfgen import canvas
 from datetime import datetime
 from decimal import Decimal
-from io import BytesIO        # ✅ import BytesIO for in-memory buffer
+from io import BytesIO        
 import streamlit as st
 
 
@@ -12,8 +12,7 @@ def money(val):
 
 
 def generate_bill_pdf():
-    """Generate a restaurant bill and return PDF bytes."""
-    buffer = BytesIO()  # ✅ create in-memory buffer
+    buffer = BytesIO()  
 
     c = canvas.Canvas(buffer, pagesize=A4)
     width, height = A4
@@ -21,7 +20,6 @@ def generate_bill_pdf():
     right_margin = width - 20 * mm
     y = height - 25 * mm
 
-    # --- Restaurant Info ---
     restaurant = {
         "name": "The Spicy Spoon",
         "address": "123 Curry Lane, Foodie City, 400001",
@@ -44,7 +42,7 @@ def generate_bill_pdf():
 
     footer_text = "Thank you! Please visit again.\nThis is a computer-generated bill."
 
-    # --- Header ---
+    # Header
     c.setFont("Helvetica-Bold", 16)
     c.drawCentredString(width / 2, y, restaurant["name"])
     y -= 7 * mm
@@ -54,7 +52,7 @@ def generate_bill_pdf():
     c.drawCentredString(width / 2, y, f"Phone: {restaurant['phone']} | GSTIN: {restaurant['gstin']}")
     y -= 8 * mm
 
-    # --- Bill Info ---
+    # Bill Info 
     c.setFont("Helvetica-Bold", 10)
     c.drawString(left_margin, y, f"Bill No: {bill['bill_no']}")
     c.drawRightString(right_margin, y, f"Date: {bill['date'].strftime('%d-%b-%Y %I:%M %p')}")
@@ -63,13 +61,13 @@ def generate_bill_pdf():
     c.drawString(left_margin, y, f"Table: {bill['table']}")
     y -= 8 * mm
 
-    # --- Column Layout ---
+    # Column Layout
     col_item_x = left_margin
     col_qty_x = right_margin - 130
     col_rate_x = right_margin - 70
     col_amt_x = right_margin
 
-    # --- Table Header ---
+    # Table Header
     c.setFont("Helvetica-Bold", 10)
     c.drawString(col_item_x, y, "Item")
     c.drawRightString(col_qty_x, y, "Qty")
@@ -79,7 +77,7 @@ def generate_bill_pdf():
     c.line(left_margin, y, right_margin, y)
     y -= 4 * mm
 
-    # --- Items ---
+    # Items 
     c.setFont("Helvetica", 9)
     subtotal = 0
     for item in bill["items"]:
@@ -95,7 +93,7 @@ def generate_bill_pdf():
         c.drawRightString(col_amt_x, y, money(amount))
         y -= 7 * mm
 
-    # --- Totals ---
+    # Totals
     c.line(left_margin, y, right_margin, y)
     y -= 6 * mm
 
@@ -116,7 +114,7 @@ def generate_bill_pdf():
     c.drawRightString(col_amt_x, y, money(grand_total))
     y -= 12 * mm
 
-    # --- Footer ---
+    # Footer
     c.setFont("Helvetica", 8)
     for line in footer_text.splitlines():
         c.drawCentredString(width / 2, y, line)
@@ -128,7 +126,7 @@ def generate_bill_pdf():
     return buffer.getvalue()
 
 
-# --- Streamlit UI ---
+# Streamlit UI 
 st.set_page_config(page_title="Restaurant Bill Generator", page_icon="🧾")
 st.title("🍽️ Restaurant Bill PDF Generator")
 st.write("Click below to download your generated bill as a PDF.")
@@ -141,3 +139,4 @@ st.download_button(
     file_name="restaurant_bill.pdf",
     mime="application/pdf"
 )
+
