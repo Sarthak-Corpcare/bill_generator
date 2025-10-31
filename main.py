@@ -55,7 +55,7 @@ def generate_bill_pdf():
     # Bill Info 
     c.setFont("Helvetica-Bold", 10)
     c.drawString(left_margin, y, f"Bill No: {bill['bill_no']}")
-    c.drawRightString(right_margin, y, f"Date: {bill['date'].strftime('%d-%b-%Y %I:%M %p')}")
+    c.drawRightString(right_margin, y, f"Date: {bill['date'].strftime('15-%b-%Y %I:%M %p')}")
     y -= 5 * mm
     c.setFont("Helvetica", 9)
     c.drawString(left_margin, y, f"Table: {bill['table']}")
@@ -139,5 +139,6 @@ st.download_button(
     file_name="restaurant_bill.pdf",
     mime="application/pdf"
 )
+
 
 
